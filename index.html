@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UMBRA. A personal ultraviolet dosimeter</title>
+<meta name="description" content="Clear-sky erythemal ultraviolet computed from solar geometry alone. No key, no server, no request.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav__mark" href="#top">Umbra<span>.</span></a>
+  <div class="nav__links">
+    <a href="#argument">The model</a>
+    <a href="#demonstration">Demonstration</a>
+    <a href="#material">Material</a>
+    <a href="#measurements">Measurements</a>
+  </div>
+  <a class="btn" href="app.html">Open the app</a>
+</nav>
+
+<!-- the travelling product: one sun, keyframed along the solar arc -->
+<div id="traveller" aria-hidden="true">
+  <svg viewBox="0 0 200 200" fill="none">
+    <circle cx="100" cy="100" r="52" fill="#EFE9DD" stroke="#141C2B" stroke-width="1.6"/>
+    <circle cx="100" cy="100" r="43" stroke="rgba(20,28,43,.28)" stroke-width="1"/>
+    <circle cx="100" cy="100" r="33" stroke="rgba(20,28,43,.16)" stroke-width="1"/>
+    <circle cx="100" cy="100" r="3.2" fill="#141C2B"/>
+    <g stroke="#141C2B" stroke-width="1.3" stroke-linecap="round" id="rays"></g>
+  </svg>
+</div>
+
+<main id="top">
+
+  <!-- 1 · HERO ------------------------------------------------------------ -->
+  <section class="hero">
+    <div class="hero__copy">
+      <p class="kicker">Phase 00 · the engine · built in the open</p>
+      <h1 class="serif">Every ultraviolet index on earth describes <em class="em">a flat plane you are not.</em></h1>
+      <p class="lede">Umbra computes erythemal ultraviolet from solar geometry alone. No key, no server, no request. The ozone table ships inside the file, so the engine runs in airplane mode, which is where beaches are.</p>
+      <div class="hero__actions">
+        <a class="btn btn--solid" href="app.html">Open the app</a>
+        <a class="btn" href="#demonstration">See it draw</a>
+      </div>
+    </div>
+
+    <dl class="hero__specs">
+      <div><dt>Model</dt><dd>Clear-sky erythemal</dd></div>
+      <div><dt>Input</dt><dd>Lat · lon · time</dd></div>
+      <div><dt>Requests</dt><dd>Fonts only</dd></div>
+      <div><dt>Cost</dt><dd>Zero</dd></div>
+    </dl>
+
+    <div class="wordmark" data-word="UMBRA" aria-hidden="true"></div>
+  </section>
+
+  <!-- 2 · ARGUMENT -------------------------------------------------------- -->
+  <section class="section" id="argument">
+    <div class="two-col">
+      <div class="section__head reveal">
+        <h2>Why the index<br>describes nobody</h2>
+        <p class="lede">One number is published for a body made of surfaces that face every direction. The gap between that number and your skin is where the whole project lives.</p>
+      </div>
+
+      <div class="rows">
+        <div class="row reveal">
+          <span class="row__label">Plane</span>
+          <p class="row__desc">The index is defined for a horizontal surface. A face is vertical, a nose points forward, an arm faces the car window. None of them receive what the forecast reports.</p>
+          <span class="row__value">0° tilt</span>
+        </div>
+        <div class="row reveal" data-delay="1">
+          <span class="row__label">Diffuse</span>
+          <p class="row__desc">Rayleigh scattering goes as the fourth power of wavelength. At 300 nm the entire sky dome is a source, not just the sun disc, so shade works far less well than it looks.</p>
+          <span class="row__value">40–60%</span>
+        </div>
+        <div class="row reveal" data-delay="2">
+          <span class="row__label">Density</span>
+          <p class="row__desc">Sun protection factor is certified at 2 mg/cm². Measured application sits near 0.8, and the penalty is exponential rather than linear. The quantity error dwarfs the timing error.</p>
+          <span class="row__value">50 → 4.8</span>
+        </div>
+        <div class="row reveal" data-delay="3">
+          <span class="row__label">Clock</span>
+          <p class="row__desc">“Reapply every two hours” is a single proxy for three unrelated failures: under-dosing at the start, film lost to sweat and water, and photodegradation of the filter itself.</p>
+          <span class="row__value">3 causes</span>
+        </div>
+        <div class="row reveal" data-delay="3">
+          <span class="row__label">Shadow</span>
+          <p class="row__desc">A shadow shorter than your height puts the sun inside 45°, which the model prices at index 5.4 under 300 Dobson units. The folk rule was never folklore. It was a measurement.</p>
+          <span class="row__value">UVI 5.4</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · DEMONSTRATION --------------------------------------------------- -->
+  <section class="section" id="demonstration">
+    <div class="section__head reveal">
+      <h2>One day, drawn <em class="em">by the engine itself</em></h2>
+      <p class="lede">Nothing below is an illustration. The curve is the output of the engine on this page, computed in your browser at load, from coordinates and a timestamp.</p>
+    </div>
+
+    <div class="variants" role="group" aria-label="Sky condition">
+      <button class="variant" type="button" aria-pressed="true"  data-variant="0">Clear sky</button>
+      <button class="variant" type="button" aria-pressed="false" data-variant="1">Broken cloud</button>
+      <button class="variant" type="button" aria-pressed="false" data-variant="2">Beach umbrella</button>
+      <button class="variant" type="button" aria-pressed="false" data-variant="3">Snow · 2650 m</button>
+    </div>
+
+    <div class="panel">
+      <div class="panel__caption">
+        <span id="cap-site">Goa · 15.30°N 74.12°E</span>
+        <span id="cap-date">21 June · solstice</span>
+        <span id="cap-cond">Clear sky · sand albedo 0.20</span>
+      </div>
+
+      <svg class="plot" id="plot" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="plot-title">
+        <title id="plot-title">Modelled erythemal ultraviolet index across one day</title>
+        <g id="plot-grid"></g>
+        <path id="curve" class="curve" d=""></path>
+      </svg>
+
+      <dl class="facts">
+        <div class="fact"><dt>Peak index</dt><dd id="f-peak">·</dd></div>
+        <div class="fact"><dt>To one MED, type III</dt><dd id="f-med">·</dd></div>
+        <div class="fact"><dt>Day total</dt><dd id="f-sed">·</dd></div>
+      </dl>
+
+      <p class="panel__note" id="p-note">The clear-sky model is a ceiling: it carries no aerosol term, so it reads above a published forecast, which folds in cloud and haze climatology. Closing that residual against archive data is the whole of Phase 00.</p>
+    </div>
+  </section>
+
+  <!-- 4 · MATERIAL -------------------------------------------------------- -->
+  <section class="section" id="material">
+    <div class="two-col">
+      <div class="section__head reveal">
+        <h2>What it is<br>made of</h2>
+        <p class="lede">Five parts, all of which fit in a file you can read in an afternoon. Nothing here is bought and nothing here phones home.</p>
+      </div>
+
+      <div class="rows">
+        <div class="row reveal">
+          <span class="row__label">Position</span>
+          <p class="row__desc">The NOAA low-precision solar algorithm. Declination, equation of time and hour angle from the timestamp alone. It reproduces the equation-of-time extremes to a tenth of a minute.</p>
+          <span class="row__value">±0.01°</span>
+        </div>
+        <div class="row reveal" data-delay="1">
+          <span class="row__label">Ozone</span>
+          <p class="row__desc">Climatological total column by latitude band and month, interpolated between band centres. Shipped inside the file, which removes the last reason to make a request.</p>
+          <span class="row__value">0.7 KB</span>
+        </div>
+        <div class="row reveal" data-delay="2">
+          <span class="row__label">Clear sky</span>
+          <p class="row__desc">Twelve and a half, times the cosine of the zenith raised to 2.42, times the ozone ratio raised to −1.23. Corrected for earth–sun distance, elevation and ground albedo.</p>
+          <span class="row__value">μ₀^2.42</span>
+        </div>
+        <div class="row reveal" data-delay="3">
+          <span class="row__label">Cloud</span>
+          <p class="row__desc">Camera exposure metadata read as a photometer. Measured luminance over the luminance the model already predicts gives a cloud factor, with no sensor and no fee.</p>
+          <span class="row__value">N²K / tS</span>
+        </div>
+        <div class="row reveal" data-delay="3">
+          <span class="row__label">Store</span>
+          <p class="row__desc">The reader's dose ledger is written to the device and stays there. There is no account, because there is nowhere for an account to live.</p>
+          <span class="row__value">0 requests</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · MEASUREMENTS ---------------------------------------------------- -->
+  <section class="section" id="measurements">
+    <div class="section__head reveal">
+      <h2>Measurements</h2>
+      <p class="lede">The constants the engine is built on, and the two figures it produces about its own construction.</p>
+    </div>
+
+    <div class="rows">
+      <div class="row reveal"><span class="row__label">Scale</span><p class="row__desc">One index unit of CIE-weighted erythemal irradiance.</p><span class="row__value">0.025 W/m²</span></div>
+      <div class="row reveal"><span class="row__label">Dose</span><p class="row__desc">One standard erythema dose.</p><span class="row__value">100 J/m²</span></div>
+      <div class="row reveal"><span class="row__label">Threshold</span><p class="row__desc">Minimal erythemal dose, Fitzpatrick type II.</p><span class="row__value">2.5 SED</span></div>
+      <div class="row reveal"><span class="row__label">Certified</span><p class="row__desc">Application density at which sun protection factor is tested.</p><span class="row__value">2.00 mg/cm²</span></div>
+      <div class="row reveal"><span class="row__label">Observed</span><p class="row__desc">Application density people actually reach.</p><span class="row__value">0.80 mg/cm²</span></div>
+      <div class="row reveal"><span class="row__label">Effective</span><p class="row__desc">A label of fifty, applied at the observed density. The exponential bound.</p><span class="row__value">4.8</span></div>
+      <div class="row reveal"><span class="row__label">Elevation</span><p class="row__desc">Gain in erythemal ultraviolet per thousand metres.</p><span class="row__value">+8%</span></div>
+      <div class="row reveal"><span class="row__label">Snow</span><p class="row__desc">Reflectance of fresh snow at erythemal wavelengths.</p><span class="row__value">0.80</span></div>
+      <div class="row reveal"><span class="row__label">Cloud</span><p class="row__desc">Peak enhancement of broken cloud above a clear sky.</p><span class="row__value">+25%</span></div>
+      <div class="row reveal"><span class="row__label">Umbrella</span><p class="row__desc">Protection of a beach umbrella across a whole modelled day.</p><span class="row__value">SPF 4.2</span></div>
+      <div class="row reveal"><span class="row__label">Engine</span><p class="row__desc">The entire model, uncompressed, comments included.</p><span class="row__value">13.0 KB</span></div>
+      <div class="row reveal"><span class="row__label">Network</span><p class="row__desc">Requests made to compute any figure on this page.</p><span class="row__value">0</span></div>
+    </div>
+  </section>
+
+  <!-- 6 · CLOSE ----------------------------------------------------------- -->
+  <section class="section close">
+    <h2 class="serif">The instrument is <em class="em">thirteen kilobytes of trigonometry.</em></h2>
+    <p class="close__fine">Phase 00 built the engine. Phases 01 and 02 built the dose ledger and the decay model on top of it, and both are live in the app: it takes your skin type and your body, tells you how many grams to actually use, and then tracks a protection level that falls as you sweat, swim and towel off. Phases 03 through 05 add the anatomical map, the camera photometer and the inference loop.</p>
+
+    <div class="close__actions">
+      <a class="btn btn--solid" href="app.html">Open the app</a>
+      <a class="btn" href="#argument">Read the model</a>
+    </div>
+
+    <div class="close__foot">
+      <span>Umbra · phase 00</span>
+      <span>No key · no server · no request</span>
+    </div>
+
+    <div class="wordmark" data-word="UMBRA" aria-hidden="true"></div>
+  </section>
+
+</main>
+
+<script src="uv-engine.js"></script>
+<script src="page.js"></script>
+</body>
+</html>

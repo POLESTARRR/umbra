@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umbra. Sunscreen worked out properly, for India.</title>
+<meta name="description" content="Live UV for any Indian city, how long your skin lasts unprotected, how much sunscreen to use and exactly when to reapply.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="app">
+
+<nav class="nav">
+  <a class="nav__mark" href="app.html">Umbra<span>.</span></a>
+  <a class="btn" href="index.html">The model</a>
+</nav>
+
+<main class="app__main">
+  <div class="grid">
+  <section class="apanel apanel--wide" id="you">
+    <div class="apanel__head">
+      <h2 class="serif">Your skin</h2>
+      <span class="apanel__hint">Stored on this device only</span>
+    </div>
+
+    <p class="lede">Pick the tone closest to the skin on your <b>inner upper arm</b>, the part the sun rarely reaches. That is your real baseline, not your tanned face.</p>
+
+    <div class="tones" role="radiogroup" aria-label="Skin tone" id="tones"></div>
+
+    <div class="fields">
+      <label class="field">
+        <span class="field__label">Height (cm)</span>
+        <input id="height" type="number" min="80" max="230" value="170" inputmode="numeric">
+      </label>
+      <label class="field">
+        <span class="field__label">Weight (kg)</span>
+        <input id="weight" type="number" min="20" max="200" value="65" inputmode="numeric">
+      </label>
+      <label class="field">
+        <span class="field__label">Bottle SPF</span>
+        <select id="spf"><option>15</option><option>30</option><option selected>50</option><option>70</option></select>
+      </label>
+      <label class="field">
+        <span class="field__label">City</span>
+        <select id="city"></select>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="locate" type="button">Use my exact location</button>
+    </div>
+
+    <p class="apanel__note" id="melanin">·</p>
+  </section>
+  <section class="apanel" id="now">
+    <div class="apanel__head">
+      <h2 class="serif">Right now</h2>
+      <span class="apanel__hint" id="src-badge">Locating…</span>
+    </div>
+
+    <div class="readout">
+      <div class="read">
+        <span class="read__label">UV index</span>
+        <span class="read__big" id="r-uvi">·</span>
+        <span class="read__sub" id="r-band">·</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Your skin burns in</span>
+        <span class="read__big" id="r-burn">·</span>
+        <span class="read__sub" id="r-burnsub">with nothing on</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Today's peak</span>
+        <span class="read__big" id="r-peak">·</span>
+        <span class="read__sub" id="r-peakat">·</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Danger window today</span>
+        <span class="read__big read__big--sm" id="r-window">·</span>
+        <span class="read__sub">above index 6</span>
+      </div>
+    </div>
+
+    <p class="verdict" id="verdict">·</p>
+
+    <svg class="plot" id="dayplot" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Ultraviolet index across today">
+      <g id="dayplot-grid"></g>
+      <path id="daycurve" class="curve" d=""></path>
+      <g id="daynow"></g>
+    </svg>
+  </section>
+  <section class="apanel" id="pigment">
+    <div class="apanel__head">
+      <h2 class="serif">Burning is not your problem</h2>
+      <span class="apanel__hint" id="pg-badge">·</span>
+    </div>
+    <p class="lede">The UV index measures <b>sunburn</b>. It was designed in Australia and Europe for skin that burns easily. If you tan rather than burn, it is quietly reporting the wrong thing, because tanning, dark spots, melasma and ageing are driven by <b>UVA</b>, which behaves completely differently.</p>
+
+    <div class="chips" role="group" aria-label="Where you are" id="pg-where">
+      <button class="chip" type="button" aria-pressed="true"  data-g="1">Outdoors</button>
+      <button class="chip" type="button" aria-pressed="false" data-g="0.62">By a car window</button>
+      <button class="chip" type="button" aria-pressed="false" data-g="0.75">By an office window</button>
+      <button class="chip" type="button" aria-pressed="false" data-g="0.02">Behind a windscreen</button>
+    </div>
+
+    <div class="readout">
+      <div class="read"><span class="read__label">Pigment index now</span><span class="read__big" id="pg-now">·</span><span class="read__sub" id="pg-band">·</span></div>
+      <div class="read"><span class="read__label">Burn risk ends</span><span class="read__big read__big--sm" id="pg-burnend">·</span><span class="read__sub">UVB collapses at low sun</span></div>
+      <div class="read"><span class="read__label">Pigment risk ends</span><span class="read__big read__big--sm" id="pg-pigend">·</span><span class="read__sub" id="pg-extra">·</span></div>
+    </div>
+
+    <svg class="plot" id="pgplot" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Sunburn risk against pigmentation risk across today">
+      <g id="pg-grid"></g>
+      <path id="pg-burn" class="curve" style="stroke:var(--ink-2);stroke-dasharray:4 5" d=""></path>
+      <path id="pg-pig" class="curve" d=""></path>
+      <g id="pg-now-mark"></g>
+    </svg>
+    <p class="verdict" id="pg-verdict">·</p>
+    <p class="apanel__note">Ozone destroys UVB when the sun is low, which is why sunburn risk falls off a cliff after four. It barely touches UVA, which is also why UVA comes through cloud, and through glass. Dashed line is sunburn; solid line is pigmentation.</p>
+  </section>
+  <section class="apanel apanel--wide" id="table">
+    <div class="apanel__head">
+      <h2 class="serif">How long can you stay out?</h2>
+      <span class="apanel__hint">Minutes on bare skin · your row is marked</span>
+    </div>
+
+    <p class="lede">Time until unprotected skin has taken one full burn dose, at every index from 1 to 12. This is when damage is done. Visible redness shows up hours later.</p>
+
+    <div class="tablewrap"><table class="matrix" id="matrix"></table></div>
+
+    <p class="apanel__note">Multiply by your sunscreen&rsquo;s real protection factor to get your protected time. Read the bottle section first, because that number is almost never the one on the label.</p>
+  </section>
+  <section class="apanel" id="bottle">
+    <div class="apanel__head">
+      <h2 class="serif">A bottle is a shape, not a number</h2>
+      <span class="apanel__hint" id="bt-badge">Tick what is on your label</span>
+    </div>
+    <p class="lede">SPF is measured in a lab under one fixed light, roughly midday sun. But when the sun is low, ozone has already stripped out the short UVB, so more of what still reaches you is UVA: <b>21% of your burn dose at noon, 72% by half five</b>. Filters weighted to UVB fade at exactly the hours most people are actually outside.</p>
+    <p class="lede">So a sunscreen does not have one number. It has a <b>shape across the day</b>, and the useful question is not whether it is good but whether that shape fits your hours.</p>
+
+    <div class="lookup">
+      <input id="bt-search" type="search" placeholder="Search a sunscreen sold in India…" autocomplete="off">
+      <div id="bt-results"></div>
+    </div>
+
+    <div id="bt-product"></div>
+
+    <div id="bt-list"></div>
+
+    <div class="chips" role="group" aria-label="When you are usually outside" id="bt-when">
+      <button class="chip" type="button" aria-pressed="true"  data-h="8,9,17,18">Commute hours</button>
+      <button class="chip" type="button" aria-pressed="false" data-h="11,12,13,14">Around midday</button>
+      <button class="chip" type="button" aria-pressed="false" data-h="9,10,11,12,13,14,15,16,17">Out most of the day</button>
+    </div>
+
+    <div class="readout">
+      <div class="read"><span class="read__label">At its best</span><span class="read__big" id="bt-peak">·</span><span class="read__sub" id="bt-peakat">·</span></div>
+      <div class="read"><span class="read__label">Holds its shape</span><span class="read__big" id="bt-steady">·</span><span class="read__sub">across the whole sunlit day</span></div>
+      <div class="read"><span class="read__label">In your hours</span><span class="read__big" id="bt-yours">·</span><span class="read__sub" id="bt-yourssub">·</span></div>
+    </div>
+
+    <svg class="plot" id="btplot" viewBox="0 0 1000 280" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Protection across the day">
+      <g id="bt-grid"></g><path id="bt-curve" class="curve" d=""></path><g id="bt-hours"></g>
+    </svg>
+
+    <p class="verdict" id="bt-verdict">·</p>
+    <div class="rows" id="bt-flags"></div>
+
+    <h3 class="sub">Add it to the list</h3>
+    <p class="lede">Tick your bottle&rsquo;s filters above, then name it. An entry needs a <b>link to where the ingredients are published</b> and it is stamped with today&rsquo;s date, because formulas get changed quietly and an unsourced claim about a real company is worth nothing.</p>
+    <div class="fields">
+      <label class="field"><span class="field__label">Brand</span><input id="ap-brand" type="text" placeholder="e.g. Minimalist"></label>
+      <label class="field"><span class="field__label">Product</span><input id="ap-name" type="text" placeholder="e.g. SPF 50 Sunscreen"></label>
+      <label class="field"><span class="field__label">Where the ingredients are listed</span><input id="ap-src" type="url" placeholder="https://…"></label>
+    </div>
+    <div class="actions">
+      <button class="btn btn--solid" id="ap-add" type="button">Add to my list</button>
+      <button class="btn" id="ap-copy" type="button">Copy my entries</button>
+    </div>
+    <div class="rows" id="ap-mine"></div>
+
+    <p class="apanel__note">Which filters a bottle contains is a fact off the label. The shape is modelled from published absorbance curves at typical use levels, so read it as indicative rather than certified. The ranking and the direction are solid. The exact figures are not. Nothing here says a product is bad. A bottle that peaks hard at noon is excellent at noon.</p>
+  </section>
+  <section class="apanel" id="plan">
+    <div class="apanel__head">
+      <h2 class="serif">Your reapplication plan</h2>
+      <span class="apanel__hint">Real clock times, from today's forecast</span>
+    </div>
+
+    <div class="fields">
+      <label class="field">
+        <span class="field__label">Going out at</span>
+        <select id="plan-start"></select>
+      </label>
+      <label class="field">
+        <span class="field__label">Coming back at</span>
+        <select id="plan-end"></select>
+      </label>
+    </div>
+
+    <div class="chips" role="group" aria-label="What you will be doing" id="plan-act">
+      <button class="chip" type="button" aria-pressed="true"  data-lam="0.30">Dry, out and about</button>
+      <button class="chip" type="button" aria-pressed="false" data-lam="0.80">Sweating</button>
+      <button class="chip" type="button" aria-pressed="false" data-lam="1.60">Swimming</button>
+    </div>
+
+    <div class="readout">
+      <div class="read">
+        <span class="read__label">Times you must apply</span>
+        <span class="read__big" id="pl-count">·</span>
+        <span class="read__sub" id="pl-gap">·</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Sunscreen needed</span>
+        <span class="read__big" id="pl-grams">·</span>
+        <span class="read__sub" id="pl-bottle">·</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Burn budget spent</span>
+        <span class="read__big" id="pl-budget">·</span>
+        <span class="read__sub">if you follow the plan</span>
+      </div>
+    </div>
+
+    <div class="rows" id="plan-rows"></div>
+    <p class="verdict" id="pl-verdict">·</p>
+  </section>
+  <section class="apanel" id="protection">
+    <div class="apanel__head">
+      <h2 class="serif">Track what you have on</h2>
+      <span class="apanel__hint" id="p-state">Nothing applied</span>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn--solid" id="apply" type="button">I just applied it</button>
+      <button class="btn" id="towel" type="button">I towelled off</button>
+      <button class="btn" id="reset" type="button">Reset</button>
+    </div>
+
+    <div class="chips" role="group" aria-label="What you are doing" id="activity">
+      <button class="chip" type="button" aria-pressed="true"  data-lam="0.12">In shade, still</button>
+      <button class="chip" type="button" aria-pressed="false" data-lam="0.30">Out and about</button>
+      <button class="chip" type="button" aria-pressed="false" data-lam="0.80">Sweating</button>
+      <button class="chip" type="button" aria-pressed="false" data-lam="1.60">In the water</button>
+      <button class="chip" type="button" aria-pressed="false" data-lam="0.12" data-shade="1" id="chip-shade" hidden>Under measured shade</button>
+    </div>
+
+    <div class="readout">
+      <div class="read">
+        <span class="read__label">Protection left</span>
+        <span class="read__big" id="p-spf">·</span>
+        <span class="read__sub" id="p-since">nothing on</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Burn budget used</span>
+        <span class="read__big" id="p-used">·</span>
+        <span class="read__sub">of one full burn dose</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Safe for another</span>
+        <span class="read__big" id="p-left">·</span>
+        <span class="read__sub">at this UV and protection</span>
+      </div>
+    </div>
+
+    <div class="meter"><div class="meter__fill" id="p-bar"></div></div>
+    <p class="verdict" id="p-verdict">Apply, then press the button so the clock is real rather than guessed.</p>
+  </section>
+  <section class="apanel" id="howto">
+    <div class="apanel__head">
+      <h2 class="serif">How much, and how</h2>
+      <span class="apanel__hint">Certified at 2.00 mg/cm²</span>
+    </div>
+
+    <div class="chips" role="group" aria-label="What is exposed" id="exposure">
+      <button class="chip" type="button" aria-pressed="true"  data-frac="0.055">Face &amp; neck</button>
+      <button class="chip" type="button" aria-pressed="false" data-frac="0.19">+ Arms &amp; hands</button>
+      <button class="chip" type="button" aria-pressed="false" data-frac="0.32">+ Lower legs</button>
+      <button class="chip" type="button" aria-pressed="false" data-frac="0.80">Swimwear</button>
+    </div>
+
+    <div class="readout">
+      <div class="read">
+        <span class="read__label">Use this much</span>
+        <span class="read__big" id="d-grams">·</span>
+        <span class="read__sub" id="d-alt">·</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Your body surface</span>
+        <span class="read__big" id="d-bsa">·</span>
+        <span class="read__sub">Mosteller formula</span>
+      </div>
+      <div class="read">
+        <span class="read__label">Protection you get</span>
+        <span class="read__big" id="d-eff">·</span>
+        <span class="read__sub" id="d-efflabel">at the amount below</span>
+      </div>
+    </div>
+
+    <div class="slider">
+      <label class="field__label" for="density">If you apply only this much of it</label>
+      <input id="density" type="range" min="10" max="100" value="40" step="5">
+      <div class="slider__out"><span id="s-pct">40%</span><span id="s-dose">of the certified amount</span></div>
+    </div>
+
+    <p class="collapse" id="collapse">·</p>
+
+    <h3 class="sub">The seven things that actually go wrong</h3>
+    <div class="rows" id="howto-rows"></div>
+  </section>
+  <section class="apanel" id="air">
+    <div class="apanel__head">
+      <h2 class="serif">The same photo measured your air</h2>
+      <span class="apanel__hint" id="air-badge">Loading…</span>
+    </div>
+    <p class="lede">Live for your city, alongside the sun, because on a lot of Indian days <b>the air is doing more damage than the light is</b>, and no sun app ever mentions it.</p>
+    <div class="readout">
+      <div class="read"><span class="read__label">Estimated PM2.5</span><span class="read__big" id="air-pm">·</span><span class="read__sub" id="air-range">·</span></div>
+      <div class="read"><span class="read__label">CPCB index</span><span class="read__big" id="air-aqi">·</span><span class="read__sub" id="air-band">·</span></div>
+      <div class="read"><span class="read__label">Particle size</span><span class="read__big read__big--sm" id="air-kind">·</span><span class="read__sub">from the Ångström exponent</span></div>
+    </div>
+    <p class="verdict" id="air-verdict">·</p>
+    <p class="apanel__note">A proxy, not a monitor. Column optical depth becomes surface concentration only through the mixing-layer depth, so treat the number as a band, roughly half to double. It is hyperlocal and instant, which a distant CPCB station is not.</p>
+  </section>
+  <section class="apanel" id="week">
+    <div class="apanel__head">
+      <h2 class="serif">The next seven days</h2>
+      <span class="apanel__hint" id="week-hint">Loading…</span>
+    </div>
+    <div class="rows" id="week-rows"></div>
+    <p class="apanel__note">Clear-sky peak is what the day would deliver with no cloud at all. When the forecast peak is far below it, cloud is doing the work, and cloud can break up in an hour.</p>
+  </section>
+  <section class="apanel" id="india">
+    <div class="apanel__head">
+      <h2 class="serif">India, right now</h2>
+      <span class="apanel__hint" id="india-hint">Loading…</span>
+    </div>
+    <div class="citygrid" id="india-rows"></div>
+  </section>
+  <section class="apanel" id="ledger">
+    <div class="apanel__head">
+      <h2 class="serif">Your sun ledger</h2>
+      <span class="apanel__hint" id="led-badge">·</span>
+    </div>
+    <div class="fields">
+      <label class="field"><span class="field__label">Your age</span><input id="age" type="number" min="1" max="100" value="25" inputmode="numeric"></label>
+      <label class="field"><span class="field__label">Also track</span><select id="who"><option value="me">Just me</option><option value="child">Me and a child</option></select></label>
+      <label class="field" id="child-wrap" style="display:none"><span class="field__label">Child's age</span><input id="child-age" type="number" min="1" max="17" value="8" inputmode="numeric"></label>
+    </div>
+    <div class="readout">
+      <div class="read"><span class="read__label">Your rate</span><span class="read__big" id="led-ratio">·</span><span class="read__sub">of the local average</span></div>
+      <div class="read"><span class="read__label">One year costs you</span><span class="read__big" id="led-equiv">·</span><span class="read__sub">years of average sun</span></div>
+      <div class="read"><span class="read__label">Banked so far</span><span class="read__big" id="led-total">·</span><span class="read__sub" id="led-days">·</span></div>
+    </div>
+    <p class="verdict" id="led-verdict">·</p>
+    <p class="apanel__note" id="led-child"></p>
+  </section>
+  <section class="apanel" id="commute">
+    <div class="apanel__head">
+      <h2 class="serif">Check this in a mirror</h2>
+      <span class="apanel__hint">A prediction you can falsify</span>
+    </div>
+    <p class="lede">India drives on the left, so the driver sits on the <b>right</b>, and side glass passes most UVA while a windscreen blocks nearly all of it. Your commute is asymmetric, and so is your face.</p>
+    <div class="fields">
+      <label class="field"><span class="field__label">How you travel</span><select id="cm-mode"><option value="bike">Two-wheeler</option><option value="car" selected>Car, driving</option><option value="auto">Auto-rickshaw</option><option value="walk">On foot</option></select></label>
+      <label class="field"><span class="field__label">Heading out, roughly</span><select id="cm-bearing"></select></label>
+      <label class="field"><span class="field__label">Minutes each way</span><input id="cm-mins" type="number" min="5" max="240" value="40" inputmode="numeric"></label>
+      <label class="field"><span class="field__label">Years doing it</span><input id="cm-years" type="number" min="1" max="40" value="3" inputmode="numeric"></label>
+    </div>
+    <div class="readout">
+      <div class="read"><span class="read__label">Side taking more</span><span class="read__big" id="cm-side">·</span><span class="read__sub">of your face and arm</span></div>
+      <div class="read"><span class="read__label">By a factor of</span><span class="read__big" id="cm-ratio">·</span><span class="read__sub">over a full year of commutes</span></div>
+    </div>
+    <p class="verdict" id="cm-verdict">·</p>
+  </section>
+  </div>
+
+  <footer class="app__foot">
+    <span>Umbra · live data from Open-Meteo, free and keyless · falls back to the on-device model offline</span>
+    <span>Guidance, not medical advice</span>
+  </footer>
+
+</main>
+
+<script src="uv-engine.js"></script>
+<script src="shade-meter.js"></script>
+<script src="filters.js"></script>
+<script src="products.js"></script>
+<script src="insight.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
