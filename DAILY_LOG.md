@@ -8,3 +8,6 @@ The `calculateUVExposure()` function returns an object with dose, percentMED, an
 
 ## 2026-10-12
 UV exposure dose is calculated as a percentage of MED, allowing quantification of burn risk beyond categorical risk levels.
+
+## 2026-10-15
+The `express.json()` middleware is applied globally to parse JSON request bodies.
