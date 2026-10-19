@@ -11,3 +11,6 @@ UV exposure dose is calculated as a percentage of MED, allowing quantification o
 
 ## 2026-10-15
 The `express.json()` middleware is applied globally to parse JSON request bodies.
+
+## 2026-10-20
+SPF recommendations in `buildRecommendation()` are stratified by risk level and skin type: 15/30/50/50+ depending on conditions.
