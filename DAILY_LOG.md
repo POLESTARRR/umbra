@@ -14,3 +14,6 @@ The `express.json()` middleware is applied globally to parse JSON request bodies
 
 ## 2026-10-20
 SPF recommendations in `buildRecommendation()` are stratified by risk level and skin type: 15/30/50/50+ depending on conditions.
+
+## 2026-10-21
+The `app.js` Express entry point sets up a `/scan` POST endpoint that invokes the UV engine with request body parameters.
