@@ -17,3 +17,6 @@ SPF recommendations in `buildRecommendation()` are stratified by risk level and 
 
 ## 2026-10-21
 The `app.js` Express entry point sets up a `/scan` POST endpoint that invokes the UV engine with request body parameters.
+
+## 2026-10-23
+The `getRiskLevel()` function implements WHO UV index thresholds: <3 low, 3-5 moderate, 6-7 high, 8-10 very-high, 11+ extreme.
