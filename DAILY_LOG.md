@@ -23,3 +23,6 @@ The `getRiskLevel()` function implements WHO UV index thresholds: <3 low, 3-5 mo
 
 ## 2026-10-28
 Static file serving is enabled via `express.static()` middleware for CSS, JS, and image assets.
+
+## 2026-10-28
+The API key for OpenWeatherMap is loaded from an environment variable without inline validation or logging on failure.
