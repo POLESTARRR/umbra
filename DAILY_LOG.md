@@ -20,3 +20,6 @@ The `app.js` Express entry point sets up a `/scan` POST endpoint that invokes th
 
 ## 2026-10-23
 The `getRiskLevel()` function implements WHO UV index thresholds: <3 low, 3-5 moderate, 6-7 high, 8-10 very-high, 11+ extreme.
+
+## 2026-10-28
+Static file serving is enabled via `express.static()` middleware for CSS, JS, and image assets.
