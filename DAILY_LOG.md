@@ -26,3 +26,6 @@ Static file serving is enabled via `express.static()` middleware for CSS, JS, an
 
 ## 2026-10-28
 The API key for OpenWeatherMap is loaded from an environment variable without inline validation or logging on failure.
+
+## 2026-10-29
+Solar geometry math in `getSunPosition()` includes Julian day calculation, solar declination δ = 23.45° × sin(360/365 × (d-81)), hour angle, zenith, elevation, and azimuth.
