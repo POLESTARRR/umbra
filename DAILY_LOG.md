@@ -35,3 +35,6 @@ Fallback UV index is hardcoded to 5 when the OpenWeatherMap API call fails or ti
 
 ## 2026-10-31
 The `uv-engine.js` implements UV index calculation with Fitzpatrick skin type multipliers (I-VI) for Minimal Erythemal Dose (MED).
+
+## 2026-10-31
+The server listens on `process.env.PORT || 3000` with environment-based port configuration.
