@@ -29,3 +29,6 @@ The API key for OpenWeatherMap is loaded from an environment variable without in
 
 ## 2026-10-29
 Solar geometry math in `getSunPosition()` includes Julian day calculation, solar declination δ = 23.45° × sin(360/365 × (d-81)), hour angle, zenith, elevation, and azimuth.
+
+## 2026-10-31
+Fallback UV index is hardcoded to 5 when the OpenWeatherMap API call fails or times out.
