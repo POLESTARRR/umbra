@@ -32,3 +32,6 @@ Solar geometry math in `getSunPosition()` includes Julian day calculation, solar
 
 ## 2026-10-31
 Fallback UV index is hardcoded to 5 when the OpenWeatherMap API call fails or times out.
+
+## 2026-10-31
+The `uv-engine.js` implements UV index calculation with Fitzpatrick skin type multipliers (I-VI) for Minimal Erythemal Dose (MED).
